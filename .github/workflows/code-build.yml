@@ -1,6 +1,12 @@
 name: build-code
 
 on:
+  push:
+    branches:
+      - 'main'
+      - 'feature/**'
+    tags:
+      - 'v**'
   workflow_call:
 
 jobs:
