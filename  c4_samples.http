@@ -1,0 +1,9 @@
+GET http://localhost:8080/api/c4/context
+
+###
+
+GET http://localhost:8080/api/c4/container
+
+###
+
+GET http://localhost:8080/api/catalog/

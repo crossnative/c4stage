@@ -1,0 +1,38 @@
+@startuml "C4 Stage Overview"
+!include <C4/C4_Container>
+!include <tupadr3/common>
+!include <tupadr3/devicons/java>
+!include <tupadr3/devicons2/go>
+!include <tupadr3/devicons2/react_original>
+!include <tupadr3/devicons2/nodejs>
+
+'SHOW_PERSON_PORTRAIT()
+
+Person(developer, "Developer", "Backstage Developer Portal User")
+
+System_Boundary(backstage, "Backstage") {
+    Container_Ext(backstageFrontend, "Frontend", "React SPA", "Backstage Frontend", $sprite="react_original")
+    Container_Ext(backstageBackend, "Backend", "Node Service", "Backstage Backend", $sprite="nodejs")
+
+    Rel_D(backstageFrontend, backstageBackend, "Uses", "REST")
+}
+
+System_Boundary(c4stagesys, "C4 Stage") {
+    Container(c4StagePlugin, "C4 Stage Plugin", "NPM Library", "Plugin for C4 Architecture diagrams in Backstage software catalog.", $sprite="react_original")
+
+    Container(c4stage, "C4 Stage Backend", "Go Service", "Creates software catalog in graph database and derives C4 views from graph.", $sprite="go")
+    ContainerDb(c4stageDb, "C4 Stage DB", "neo4j", "Stores the software catalog as graph.")
+    Container_Ext(plantUMLServer, "Plant UML Server", "Java Service", "Renders C4 PlantUML diagrams.", $sprite="java")
+
+    Rel_D(c4StagePlugin, c4stage, "Uses", "REST")
+    Rel_D(c4stage, c4stageDb, "Uses", "Cypher Queries")
+    Rel_D(c4stage, plantUMLServer, "Uses", "HTTP")
+    Rel_R(c4stage, backstageBackend, "Read Software Catalog", "REST")
+    Rel_L(backstageFrontend, c4StagePlugin, "Uses", "NPM Package Import")
+}
+
+Rel_D(developer, backstageFrontend, "Uses", "HTTPS")
+
+SHOW_LEGEND()
+
+@enduml

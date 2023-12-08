@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  neo4j:
+    container_name: c4stage__neo4j
+    image: neo4j:5.14.0
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      - NEO4J_AUTH=neo4j/c4stage12345!
+  plantuml:
+    container_name: c4stage__plantuml
+    image: plantuml/plantuml-server:latest
+    ports:
+      - 9090:8080

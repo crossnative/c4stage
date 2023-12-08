@@ -1,0 +1,24 @@
+name: build-docker
+
+on:
+  push:
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+      - name: 'Build Docker Image'
+        run: |
+          docker build . --tag ghcr.io/crossnative/c4stage:latest
+          docker push ghcr.io/crossnative/c4stage:latest

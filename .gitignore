@@ -1,0 +1,6 @@
+tmp
+__debug*
+build
+.DS_Store
+cover.out
+out
