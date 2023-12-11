@@ -44,6 +44,7 @@ const PLANT_UML_TPL_C4_LANDSCAPE_CONTAINER = `
 !include <tupadr3/devicons/angular>
 !include <tupadr3/devicons2/spring>
 !include <tupadr3/devicons2/c>
+!include <tupadr3/devicons2/oracle_original>
 
 SHOW_PERSON_PORTRAIT()
 
@@ -62,7 +63,7 @@ Person({{.ID}}, "{{.Title}}", "{{.Description}}")
 System_Boundary({{.ID}}, "{{.Title}}", "{{.Description}}") {
 	{{- range .Containers}}
 		{{- if .IsDatabase }}
-		ContainerDb({{.ID}}, "{{.Title}}", "{{.Label}}", "{{.Description}}", $tags="{{.AsTags}}")
+		ContainerDb({{.ID}}, "{{.Title}}", "{{.Label}}", "{{.Description}}", $tags="{{.AsTags}}", $sprite="{{.Sprite}}")
 		{{- else if .IsPerson }}
 		{{- else }}
 		Container({{.ID}}, "{{.Title}}", "{{.Label}}", "{{.Description}}", $tags="{{.AsTags}}", $sprite="{{.Sprite}}")

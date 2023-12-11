@@ -60,7 +60,13 @@ type C4Repository interface {
 	) (*C4DiagramModel, error)
 }
 
-var spriteTags = []string{"spring", "c", "java", "angular"}
+var spriteWhitelist = map[string]string{
+	"spring":  "spring",
+	"c":       "c",
+	"java":    "java",
+	"angular": "angular",
+	"oracle":  "oracle_original",
+}
 var tagWhitelist = []string{"deprecated", "experimental"}
 
 func (m C4DiagramModel) IsEmpty() bool {
@@ -174,8 +180,9 @@ func (c4Model *C4DiagramModel) AddContainer(toAdd *Container) {
 
 func (c Container) Sprite() string {
 	for _, tag := range c.Tags {
-		if slices.Contains(spriteTags, tag) {
-			return tag
+		spriteName, ok := spriteWhitelist[tag]
+		if ok {
+			return spriteName
 		}
 	}
 	return ""
