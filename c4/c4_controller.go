@@ -60,8 +60,8 @@ func (c *C4Controller) HandleGetSystemLandscapeDiagram() http.HandlerFunc {
 		renderPlantUML(
 			w,
 			sw.String(),
-			plantUMLServer,
 			imageFormat,
+			plantUMLServer,
 			isProduction,
 		)
 	}
