@@ -92,3 +92,21 @@ func TestAsTagsWithNonWhitelistedTag(t *testing.T) {
 
 	is.Equal(c.AsTags(), "")
 }
+
+
+func TestC4ModelScaleFormattedWithUnsetScale(t *testing.T) {
+	is := is.New(t)
+
+	m := C4DiagramModel{}
+
+	is.Equal(m.ScaleFormatted(), "1.0")
+}
+
+func TestC4ModelScaleFormattedWithScale(t *testing.T) {
+	is := is.New(t)
+
+	m := C4DiagramModel{}
+	m.Scale = .3
+
+	is.Equal(m.ScaleFormatted(), "0.30")
+}

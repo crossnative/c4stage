@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
@@ -41,6 +42,13 @@ func (c *C4Controller) HandleGetSystemLandscapeDiagram() http.HandlerFunc {
 			return
 		}
 
+		// adjust scale
+		scale, _ := strconv.ParseFloat(r.URL.Query().Get("scale"), 64)
+		c4Model.Scale = scale
+
+		// adjust image format
+		imageFormat := r.URL.Query().Get("format")
+
 		sw := bytes.NewBufferString("")
 
 		err = e.ExportToPlantUMLContext(c4Model, sw)
@@ -53,6 +61,7 @@ func (c *C4Controller) HandleGetSystemLandscapeDiagram() http.HandlerFunc {
 			w,
 			sw.String(),
 			plantUMLServer,
+			imageFormat,
 			isProduction,
 		)
 	}
@@ -70,6 +79,13 @@ func (c *C4Controller) HandleGetSystemLandscapeContainerDiagram() http.HandlerFu
 			return
 		}
 
+		// adjust scale
+		scale, _ := strconv.ParseFloat(r.URL.Query().Get("scale"), 64)
+		c4Model.Scale = scale
+
+		// adjust image format
+		imageFormat := r.URL.Query().Get("format")
+
 		sw := bytes.NewBufferString("")
 
 		err = e.ExportToPlantUMLContainer(c4Model, sw)
@@ -81,6 +97,7 @@ func (c *C4Controller) HandleGetSystemLandscapeContainerDiagram() http.HandlerFu
 		renderPlantUML(
 			w,
 			sw.String(),
+			imageFormat,
 			plantUMLServer,
 			isProduction,
 		)
@@ -106,6 +123,13 @@ func (c *C4Controller) HandleGetContainerDiagram() http.HandlerFunc {
 			return
 		}
 
+		// adjust scale
+		scale, _ := strconv.ParseFloat(r.URL.Query().Get("scale"), 64)
+		c4Model.Scale = scale
+
+		// adjust image format
+		imageFormat := r.URL.Query().Get("format")
+
 		sw := bytes.NewBufferString("")
 
 		err = e.ExportToPlantUMLContainer(c4Model, sw)
@@ -117,15 +141,21 @@ func (c *C4Controller) HandleGetContainerDiagram() http.HandlerFunc {
 		renderPlantUML(
 			w,
 			sw.String(),
+			imageFormat,
 			plantUMLServer,
 			isProduction,
 		)
 	}
 }
 
-func renderPlantUML(w http.ResponseWriter, plantUMLBody string, plantUMLServer string, isProduction bool) {
+func renderPlantUML(w http.ResponseWriter, plantUMLBody string, imageFormat string, plantUMLServer string, isProduction bool) {
+	outputFormat := "png"
+	if imageFormat == "svg" {
+		outputFormat = "svg"
+	}
+
 	response, err := http.Post(
-		fmt.Sprintf("%v/png", plantUMLServer),
+		fmt.Sprintf("%v/%v", plantUMLServer, outputFormat),
 		"text/plain; charset=UTF-8",
 		strings.NewReader(plantUMLBody),
 	)

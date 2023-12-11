@@ -2,6 +2,7 @@ package c4
 
 import (
 	"context"
+	"fmt"
 	"slices"
 	"strings"
 )
@@ -12,6 +13,7 @@ type C4DiagramModel struct {
 	Containers      []*Container
 	Relations       []Relation
 	Persons         []*System
+	Scale           float64
 }
 
 type System struct {
@@ -83,6 +85,13 @@ func (s System) IsPerson() bool {
 
 func (s *System) AddTag(toAdd string) {
 	s.Tags = append(s.Tags, toAdd)
+}
+
+func (m *C4DiagramModel) ScaleFormatted() string {
+	if m.Scale == 0 {
+		return "1.0"
+	}
+	return fmt.Sprintf("%.2f", m.Scale)
 }
 
 func (s System) AsTags() string {

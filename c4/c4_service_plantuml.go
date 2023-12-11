@@ -48,6 +48,8 @@ const PLANT_UML_TPL_C4_LANDSCAPE_CONTAINER = `
 
 SHOW_PERSON_PORTRAIT()
 
+scale {{ .ScaleFormatted }}
+
 AddElementTag("experimental", $bgColor="DeepSkyBlue")
 AddElementTag("deprecated", $bgColor="DarkCyan")
 
