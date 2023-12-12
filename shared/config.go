@@ -12,8 +12,10 @@ type Config struct {
 	DbUser     string `default:"neo4j"`
 	DbPassword string `default:"c4stage12345!"`
 
-	PlantUMLServer  string `default:"http://localhost:9090"`
-	BackstageServer string `default:"http://localhost:7007"`
+	PlantUMLServer string `default:"http://localhost:9090"`
+
+	BackstageServer      string `default:"http://localhost:7007"`
+	BackstageImportDelay int    `default:"0"`
 }
 
 func (c Config) IsProduction() bool {
