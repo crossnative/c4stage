@@ -119,7 +119,7 @@ func (r *C4EntityNeo4j) SystemLandscapeDiagram(
 		`
 		MATCH (s:System) 
 		OPTIONAL MATCH (:System)-[r]-(:System)
-		RETURN s,r LIMIT 1000
+		RETURN s,r LIMIT 3000
 		`,
 		map[string]any{}, neo4j.EagerResultTransformer)
 	if err != nil {
