@@ -15,18 +15,22 @@ SHOW_PERSON_PORTRAIT()
 AddElementTag("experimental", $bgColor="DeepSkyBlue")
 AddElementTag("deprecated", $bgColor="DarkCyan")
 
+' Persons
 {{- range .Persons}}
 Person({{.ID}}, "{{.Title}}", "{{.Description}}")
 {{- end}}
 
+' External Systems
 {{- range .ExternalSystems}}
 System_Ext({{.ID}}, "{{.Title}}")
 {{- end}}
 
+' Systems
 {{- range .Systems}}
 System({{.ID}}, "{{.Title}}", "{{.Description}}", $tags="{{.AsTags}}")
 {{- end}}
 
+' Relations
 {{- range .Relations}}
 Rel({{.SourceID}}, {{.TargetID}}, "{{.Label}}")
 {{- end}}
@@ -53,14 +57,17 @@ scale {{ .ScaleFormatted }}
 AddElementTag("experimental", $bgColor="DeepSkyBlue")
 AddElementTag("deprecated", $bgColor="DarkCyan")
 
-{{- range .ExternalSystems}}
-System_Ext({{.ID}}, "{{.Title}}", "{{.Description}}")
-{{- end}}
-
+' Persons
 {{- range .Persons}}
 Person({{.ID}}, "{{.Title}}", "{{.Description}}")
 {{- end}}
 
+' External Systems
+{{- range .ExternalSystems}}
+System_Ext({{.ID}}, "{{.Title}}", "{{.Description}}")
+{{- end}}
+
+' Systems
 {{- range .Systems}}
 System_Boundary({{.ID}}, "{{.Title}}", "{{.Description}}") {
 	{{- range .Containers}}
@@ -74,6 +81,7 @@ System_Boundary({{.ID}}, "{{.Title}}", "{{.Description}}") {
 }
 {{- end}}
 
+' Relations
 {{- range .Relations}}
 Rel({{.SourceID}}, {{.TargetID}}, "{{.Label}}")
 {{- end}}

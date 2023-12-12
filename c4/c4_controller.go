@@ -152,6 +152,9 @@ func renderPlantUML(w http.ResponseWriter, plantUMLBody string, imageFormat stri
 	outputFormat := "png"
 	if imageFormat == "svg" {
 		outputFormat = "svg"
+	} else if imageFormat == "puml" {
+		w.Write([]byte(plantUMLBody))
+		return
 	}
 
 	response, err := http.Post(
