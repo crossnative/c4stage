@@ -22,7 +22,7 @@ Person({{.ID}}, "{{.Title}}", "{{.Description}}")
 
 ' External Systems
 {{- range .ExternalSystems}}
-System_Ext({{.ID}}, "{{.Title}}")
+System_Ext({{.ID}}, "{{.Title}}", "{{.Description}}")
 {{- end}}
 
 ' Systems
