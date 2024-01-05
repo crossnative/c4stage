@@ -14,8 +14,8 @@ type Config struct {
 
 	PlantUMLServer string `default:"http://localhost:9090"`
 
-	BackstageServer      string `default:"https://backstage-dev-crossnative-backstage.kube.ppidev.net"`
-	BackstageImportDelay int    `default:"-1"`
+	BackstageServer      string `default:"http://localhost:7007"`
+	BackstageImportDelay int    `default:"5"`
 }
 
 func (c Config) IsProduction() bool {
