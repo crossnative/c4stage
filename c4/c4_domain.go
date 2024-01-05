@@ -63,11 +63,14 @@ type C4Repository interface {
 }
 
 var spriteWhitelist = map[string]string{
-	"spring":  "spring",
-	"c":       "c",
-	"java":    "java",
-	"angular": "angular",
-	"oracle":  "oracle_original",
+	"spring":     "spring",
+	"c":          "c",
+	"go":         "go",
+	"postgresql": "postgresql",
+	"postgres":   "postgresql",
+	"java":       "java",
+	"angular":    "angular",
+	"oracle":     "oracle_original",
 }
 var tagWhitelist = []string{"deprecated", "experimental"}
 

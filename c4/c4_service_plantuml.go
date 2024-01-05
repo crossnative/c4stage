@@ -44,6 +44,8 @@ const PLANT_UML_TPL_C4_LANDSCAPE_CONTAINER = `
 @startuml
 !include <C4/C4_Container>
 !include <tupadr3/common>
+!include <tupadr3/devicons/go>
+!include <tupadr3/devicons/postgresql>
 !include <tupadr3/devicons/java>
 !include <tupadr3/devicons/angular>
 !include <tupadr3/devicons2/spring>
