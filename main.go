@@ -85,21 +85,22 @@ func newApp() (*shared.Config, neo4j.DriverWithContext, *chi.Mux, error) {
 	}
 
 	log.Printf("Importing Backstage Catalog in %v seconds.", config.BackstageImportDelay)
-	time.AfterFunc(time.Duration(config.BackstageImportDelay)*time.Second, func() {
-		log.Println("Importing Backstage Catalog ...")
-		backstageImportService := backstage.BackstageImporter{
-			Config:     &config,
-			Repository: catalogRepository,
-		}
+	if config.BackstageImportDelay != -1 {
+		time.AfterFunc(time.Duration(config.BackstageImportDelay)*time.Second, func() {
+			log.Println("Importing Backstage Catalog ...")
+			backstageImportService := backstage.BackstageImporter{
+				Config:     &config,
+				Repository: catalogRepository,
+			}
 
-		err = backstageImportService.ImportBackstageCatalog()
-		// err = backstageImportService.ImportYamlFiles()
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Println("Successfully imported Backstage Catalog.")
-	})
-	//defer timer.Stop()
+			err = backstageImportService.ImportBackstageCatalog()
+			// err = backstageImportService.ImportYamlFiles()
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Println("Successfully imported Backstage Catalog.")
+		})
+	}
 
 	apiHandlers := []shared.DomainHandler{
 		&catalog.CatalogController{
