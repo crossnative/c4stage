@@ -22,10 +22,10 @@ func (c *ImportController) RegisterOpen(router chi.Router) {
 	r := chi.NewRouter()
 	router.Mount("/backstage", r)
 
-	r.Get("/context", c.HandleGetSystemLandscapeDiagram())
+	r.Get("/import", c.HandleImportFromBackstage())
 }
 
-func (c *ImportController) HandleGetSystemLandscapeDiagram() http.HandlerFunc {
+func (c *ImportController) HandleImportFromBackstage() http.HandlerFunc {
 	backstageImportService := BackstageImporter{
 		Config:     c.Config,
 		Repository: c.CatalogRepository,
