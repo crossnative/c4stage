@@ -3,6 +3,7 @@ package catalog
 import (
 	"context"
 	"fmt"
+	"log"
 	"slices"
 	"strings"
 
@@ -239,7 +240,8 @@ func (r *CatalogRepositoryNeo4j) CreateAll(
 				for _, dependsOn := range e.DependsOn {
 					dependsOnKind, dependsOnName, err := parseDependsOn(dependsOn)
 					if err != nil {
-						return err
+						log.Printf("Ignoring dependsOn: %v", dependsOn)
+						continue
 					}
 
 					_, err = neo4j.ExecuteQuery(ctx, r.Driver,
