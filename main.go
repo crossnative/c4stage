@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -103,6 +104,10 @@ func newApp() (*shared.Config, neo4j.DriverWithContext, *chi.Mux, error) {
 	}
 
 	apiHandlers := []shared.DomainHandler{
+		&backstage.ImportController{
+			Config:            &config,
+			CatalogRepository: catalogRepository,
+		},
 		&catalog.CatalogController{
 			Config:     &config,
 			Repository: catalogRepository,
@@ -124,6 +129,10 @@ func registerRoutes(router *chi.Mux, apiHandlers []shared.DomainHandler) {
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.Compress(5))
+
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		io.WriteString(w, "Welcome to C4Stage!")
+	})
 
 	router.Mount("/api", registerApiRoutes(apiHandlers))
 }
